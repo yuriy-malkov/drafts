@@ -1,7 +1,6 @@
 package main.scala.cache
 
 import scala.collection.mutable
-import scala.collection.mutable.Map
 
 class SimpleCache {
   val store: mutable.Map[String, String] = mutable.Map[String, String]()
