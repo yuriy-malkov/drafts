@@ -1,12 +1,18 @@
 package main.scala.cache
 
+import scala.collection.mutable
+import scala.collection.mutable.Map
+
 class SimpleCache {
-  def addHash(): Unit = {
-    println("adding hash to cache")
+  val store: mutable.Map[String, String] = mutable.Map[String, String]()
+
+  def addHash(hash: String): Unit = {
+    println(s"adding $hash to cache")
+    store += (hash -> hash)
   }
 
-  def readHash(): Unit = {
-    println("returning data from hash")
+  def readHash(hash: String): Unit = {
+    println(s"returning $hash from cache")
   }
 }
 
@@ -15,6 +21,7 @@ object SimpleCache extends App {
 
   val cache = new SimpleCache()
 
-  cache.addHash()
-  cache.readHash()
+  cache.addHash("some hash")
+  cache.readHash("some hash")
+  println(s"whats in cache? ${cache.store}")
 }
