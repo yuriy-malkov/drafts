@@ -11,8 +11,9 @@ class SimpleCache {
     store += (hash -> hash)
   }
 
-  def readHash(hash: String): Unit = {
+  def readHash(hash: String): Option[String] = {
     println(s"returning $hash from cache")
+    store.get(hash)
   }
 }
 
@@ -22,6 +23,7 @@ object SimpleCache extends App {
   val cache = new SimpleCache()
 
   cache.addHash("some hash")
-  cache.readHash("some hash")
+  val testHash: Option[String] = cache.readHash("some hash")
+  println(s"my testHash = $testHash")
   println(s"whats in cache? ${cache.store}")
 }
