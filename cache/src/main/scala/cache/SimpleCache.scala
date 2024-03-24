@@ -1,5 +1,5 @@
 package main.scala.cache
 
-object Cache extends App {
+object SimpleCache extends App {
   println("Welcome to my Cache implementation")
 }
