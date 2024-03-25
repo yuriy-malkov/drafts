@@ -2,16 +2,20 @@ package main.scala.cache
 
 import scala.collection.mutable
 
-class SimpleCache {
-  val store: mutable.Map[String, String] = mutable.Map[String, String]()
+class SimpleCache(size: Long) {
+  private val hashSize: Long = size
+  val store: mutable.Map[String, (String, Int)] = mutable.Map[String, (String, Int)]()
+
 
   def addHash(hash: String): Unit = {
-    println(s"adding $hash to cache")
-    store += (hash -> hash)
+    store += (hash -> (hash, 0))
   }
 
   def readHash(hash: String): Option[String] = {
-    println(s"returning $hash from cache")
+    store.get(hash).map(_._1)
+  }
+
+  def countReads(hash: String): Unit = {
     store.get(hash)
   }
 }
@@ -19,10 +23,12 @@ class SimpleCache {
 object SimpleCache extends App {
   println("Welcome to my Cache implementation")
 
-  val cache = new SimpleCache()
+  val cache = new SimpleCache(5)
 
   cache.addHash("some hash")
   val testHash: Option[String] = cache.readHash("some hash")
+  val nonExistingHash = cache.readHash("non existent hash")
   println(s"my testHash = $testHash")
+  println(s"nonExistingHash = $nonExistingHash")
   println(s"whats in cache? ${cache.store}")
 }
