@@ -12,12 +12,14 @@ class SimpleCache(size: Long) {
   }
 
   def readHash(hash: String): Option[String] = {
-    store.get(hash).map(_._1)
+    store.get(hash) match {
+      case None => None
+      case Some(value) =>
+        store.update(hash, (value._1, value._2 +1))
+        Some(value._1)
+    }
   }
 
-  def countReads(hash: String): Unit = {
-    store.get(hash)
-  }
 }
 
 object SimpleCache extends App {
