@@ -7,7 +7,15 @@ class SimpleCache(size: Long) {
   val store: mutable.Map[String, (String, Int)] = mutable.Map[String, (String, Int)]()
 
 
+  private def removeLeastUsedHash(): Unit = {
+    println("Removing least used hash")
+  }
+
   def addHash(hash: String): Unit = {
+    if (store.size + 1 >= hashSize) {
+      println(s"Cache is full = ${store.size}. Removing least used hash")
+      removeLeastUsedHash()
+    }
     store += (hash -> (hash, 0))
   }
 
@@ -25,9 +33,11 @@ class SimpleCache(size: Long) {
 object SimpleCache extends App {
   println("Welcome to my Cache implementation")
 
-  val cache = new SimpleCache(5)
+  val cache = new SimpleCache(2)
 
-  cache.addHash("some hash")
+  cache.addHash("hash1")
+  cache.addHash("hash2")
+  cache.addHash("hash3")
   val testHash: Option[String] = cache.readHash("some hash")
   val nonExistingHash = cache.readHash("non existent hash")
   println(s"my testHash = $testHash")
